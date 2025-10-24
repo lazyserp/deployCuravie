@@ -56,6 +56,12 @@ app.config["SECRET_KEY"] = "super-secret-key"
 # ✅ Initialize database
 db.init_app(app)
 
+# ✅ Create tables if they don't exist
+with app.app_context():
+    db.create_all()
+    print("✅ All tables created (if not existing).")
+
+
 # ✅ Optional: verify DB connectivity at startup
 try:
     with app.app_context():
