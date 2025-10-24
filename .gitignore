@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+tempCodeRunnerFile.py
+# Environment
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+.env
+
+#myfiles
+anushka.txt

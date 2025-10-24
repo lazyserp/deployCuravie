@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CuraVie{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body>
+    <div class="page-wrapper">
+
+        <header class="main-header">
+            <div class="container navbar">
+                <a href="{{ url_for('home') }}" class="navbar-logo">
+                    <span class="logo-icon-plus">+</span>
+                    <span class="logo-text">CuraVie</span>
+                </a>
+
+                <nav class="navbar-nav">
+                    <a href="{{ url_for('home') }}" class="nav-link active" data-translate-key="nav_home">Home</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link" data-translate-key="nav_records">Dashboard</a>
+                    {# <a href="#" class="nav-link" data-translate-key="nav_hospitals">Hospitals</a> #}
+                    <div class="language-switcher">
+                        <span>🌐</span>
+                        <select id="language-select">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="ta">தமிழ்</option>
+                        </select>
+                    </div>
+                </nav>
+        
+                <div class="header-actions">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" data-translate-key="nav_dashboard">Dashboard</a>
+                        <form action="{{ url_for('logout') }}" method="POST" style="display:inline;">
+                            {{ logout_form.hidden_tag() }}
+                            <button type="submit" class="btn btn-primary" data-translate-key="nav_logout">Logout</button>
+                        </form>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-primary" data-translate-key="nav_login">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+        
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+
+</body>
+</html>
